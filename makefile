@@ -1,4 +1,7 @@
-all: tetriminos tetris visualization tests
+all: config tetriminos tetris visualization tests
+
+config: config.ml
+	ocamlbuild -use-ocamlfind config.byte
 
 tetriminos: tetriminos.ml
 	ocamlbuild -use-ocamlfind tetriminos.byte

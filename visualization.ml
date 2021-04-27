@@ -2,7 +2,7 @@
                          CS 51 Final Project
                             OCaml Tetris
 
-                        Visualizing the game
+                        VisualizIng the game
  *)
 
 open Config ;;
