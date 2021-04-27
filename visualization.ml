@@ -1,5 +1,5 @@
 (*
-                        CS 51 Final Project
+                         CS 51 Final Project
                             OCaml Tetris
 
                         Visualizing the game
