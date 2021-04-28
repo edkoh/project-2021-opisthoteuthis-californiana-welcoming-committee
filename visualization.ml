@@ -8,3 +8,7 @@
 open Config ;;
 module G = Graphics ;;
 
+while true do
+  let c = G.read_key in
+  Printf.printf c
+done
