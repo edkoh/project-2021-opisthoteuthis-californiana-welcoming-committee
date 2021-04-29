@@ -46,9 +46,9 @@ let render (m : bool array array) : unit =
   
 let _ =
   init_graph ();
-  let test = Array.make_matrix 10 20 true in
-  test.(1).(1) <- false;
-  test.(1).(2) <- false;
+  let test = Array.make_matrix 10 20 false in
+  test.(1).(1) <- true;
+  test.(5).(18) <- true;
   render (test);
 
   Unix.sleepf 5.;
