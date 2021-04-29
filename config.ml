@@ -5,3 +5,4 @@
                                Config
  *)
 
+let cTICK_SPEED = 1000. /. 1000. ;;

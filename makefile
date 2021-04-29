@@ -1,4 +1,4 @@
-all: config tetriminos tetris visualization tests
+all: config tetriminos tetris vis tests
 
 config: config.ml
 	ocamlbuild -use-ocamlfind config.byte
@@ -9,7 +9,7 @@ tetriminos: tetriminos.ml
 tetris: tetris.ml
 	ocamlbuild -use-ocamlfind tetris.byte
 
-visualization: visualization.ml
+vis: visualization.ml
 	ocamlbuild -use-ocamlfind visualization.byte
 
 tests: tests.ml

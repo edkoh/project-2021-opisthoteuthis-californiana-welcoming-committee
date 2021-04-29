@@ -44,6 +44,7 @@ let render (m : bool array array) : unit =
 ;;
 
   
+(*
 let _ =
   init_graph ();
   let test = Array.make_matrix 10 20 false in
@@ -52,3 +53,4 @@ let _ =
   render (test);
 
   Unix.sleepf 5.;
+  *)
