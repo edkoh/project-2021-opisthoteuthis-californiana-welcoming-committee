@@ -45,14 +45,15 @@ let fill_square (x : int) (y : int) (c : G.color) =
 
 
 let render (m : bool array array) : unit =
+  G.clear_graph ();
   for i = 0 to (Array.length m) - 1 do
     for j = 0 to (Array.length m.(i)) - 1 do
-      let color = if m.(i).(j) then G.blue else G.white in
-      fill_square i j color;
+      if m.(i).(j) then fill_square i j G.blue;
     done;
   done;
   draw_grid_lines ();
 ;;
+
 
 let clear (m : bool array array) : unit =
   for i = 0 to (Array.length m) - 1 do
