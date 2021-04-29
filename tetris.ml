@@ -18,7 +18,3 @@ let _ =
     V.render m;
     Unix.sleepf cTICK_SPEED;
   done;
-
-
-
-
