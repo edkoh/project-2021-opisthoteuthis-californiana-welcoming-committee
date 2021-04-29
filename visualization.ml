@@ -8,12 +8,12 @@
 open Config ;;
 module G = Graphics ;;
 
-let init_graph () =
-  let screenx = cBOARD_X * cBLOCK_SIZE in
-  let screeny = cBOARD_Y * cBLOCK_SIZE in
-  G.open_graph (" " ^ string_of_int screenx ^ "x" ^ string_of_int screeny);
-  G.draw_rect 0 0 screenx screeny;
+let screenx = cBOARD_X * cBLOCK_SIZE ;;
+let screeny = cBOARD_Y * cBLOCK_SIZE ;;
 
+let draw_grid_lines () =
+  G.set_color G.black;
+  G.moveto 0 0;
   (* draw vertical lines *)
   while (G.current_x () < screenx) do
     let moved_x = G.current_x () + cBLOCK_SIZE in
@@ -29,10 +29,17 @@ let init_graph () =
     G.lineto screenx moved_y;
   done;
 ;;
+ 
+
+let init_graph () =
+  G.open_graph (" " ^ string_of_int screenx ^ "x" ^ string_of_int screeny);
+  G.draw_rect 0 0 screenx screeny;
+  draw_grid_lines ();
+;;
 
 
-let fill_square (x : int) (y : int) =
-  G.set_color G.blue;
+let fill_square (x : int) (y : int) (c : G.color) =
+  G.set_color c;
   G.fill_rect (x * cBLOCK_SIZE) (y * cBLOCK_SIZE) cBLOCK_SIZE cBLOCK_SIZE;
 ;;
 
@@ -40,7 +47,17 @@ let fill_square (x : int) (y : int) =
 let render (m : bool array array) : unit =
   for i = 0 to (Array.length m) - 1 do
     for j = 0 to (Array.length m.(i)) - 1 do
-      if m.(i).(j) then fill_square i j
+      let color = if m.(i).(j) then G.blue else G.white in
+      fill_square i j color;
+    done;
+  done;
+  draw_grid_lines ();
+;;
+
+let clear (m : bool array array) : unit =
+  for i = 0 to (Array.length m) - 1 do
+    for j = 0 to (Array.length m.(i)) - 1 do
+      m.(i).(j) <- false
     done
   done
 ;;
