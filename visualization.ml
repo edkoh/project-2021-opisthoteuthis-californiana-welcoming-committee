@@ -30,7 +30,7 @@ let draw_grid_lines () =
     G.lineto screenx moved_y;
   done;
 ;;
- 
+
 
 let init_graph () =
   G.open_graph (" " ^ string_of_int screenx ^ "x" ^ string_of_int screeny);
@@ -39,7 +39,7 @@ let init_graph () =
 ;;
 
 
-let fill_square ((x, y) : int * int) (c : G.color) =
+let fill_square ((x, y) : int * int) (c : G.color) : unit =
   G.set_color c;
   G.fill_rect (x * cBLOCK_SIZE) (y * cBLOCK_SIZE) cBLOCK_SIZE cBLOCK_SIZE;
 ;;
