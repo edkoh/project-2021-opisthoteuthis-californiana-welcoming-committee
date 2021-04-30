@@ -5,7 +5,18 @@
                                Config
  *)
 
-let cTICK_SPEED = 1000. /. 1000. ;;
+type action = 
+  | Down
+  | Left
+  | Right
+  | Drop
+  | CW
+  | CCW ;;
+
+type model = bool array array ;;
+
+
+let cTICK_SPEED = 200. /. 1000. ;;
 let cBOARD_X = 10 ;;
 let cBOARD_Y = 20 ;;
 let cBLOCK_SIZE = 40 ;;
