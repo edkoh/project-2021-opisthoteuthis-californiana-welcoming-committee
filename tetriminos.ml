@@ -5,15 +5,29 @@
                              Tetriminos
  *)
 
+open Config ;;
 module O = Orientation ;;
 module Viz = Visualization ;;
 
-class tetrimino (initx : int) (inity : int) =
+class tetrimino =
   object (self)
-    val mutable posx : int = initx
-    val mutable posy : int = inity
-    val mutable step_size : int = 0
+    val mutable posx : int = 5
+    val mutable posy : int = 19
 
+    method move_down () = posy <- posy - 1
+
+    method move_left () = (); 
+    method move_right () = (); 
+
+    method gen_model : bool array array = 
+      let m = Array.make_matrix cBOARD_X cBOARD_Y false in
+      m.(posx).(posy) <- true; m
+
+
+
+  end
+
+(*
 class ipiece (initx : int) (inity : int) =
   object (self)
     inherit tetrimino initx inity as super
@@ -23,3 +37,5 @@ class ipiece (initx : int) (inity : int) =
     initializer
       orientation
 
+
+*)

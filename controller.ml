@@ -8,6 +8,11 @@ module G = Graphics ;;
 
 let rec loop () =
   let event = G.wait_next_event [Key_pressed] in
+  match event.key with
+  | 'w' ->
+  | 'a' ->
+  | 's' ->
+  | 'd' ->
   (if event.keypressed then (G.draw_string (String.make 1 event.key)));
   loop ()
 
