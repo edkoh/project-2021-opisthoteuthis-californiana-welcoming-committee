@@ -11,11 +11,9 @@ class type orientation =
     method cw : unit
     (* ccw -- Rotates counterclockwise. *)
     method ccw : unit
-    (* count -- Returns the current count, initially zero. *)
-    method count : int
+    (* ori -- Returns the current orientation, initially zero. *)
+    method ori : int
   end ;;
-
-type ori = float * float ;;
 
 let cw (x1, y1) (x2, y2) =
   x1 +. x2, y1 +. y2 ;;
