@@ -6,7 +6,7 @@
 open Config ;;
 module G = Graphics ;;
 
-let rec loop () =
+let on_capture () =
   let event = G.wait_next_event [Key_pressed] in
   match event.key with
   | 'w' ->

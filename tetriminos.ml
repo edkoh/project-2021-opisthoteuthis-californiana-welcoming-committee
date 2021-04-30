@@ -9,19 +9,19 @@ open Config ;;
 module O = Orientation ;;
 
 class tetrimino =
-  object
+  object (this)
     val mutable posx : int = 5
     val mutable posy : int = 20
 
     method get_pos : int * int = posx, posy
 
-    method move_down = 
-      posy <- posy - 1
-
     method intersect (m : model) (a : action) : bool = 
       match a with
       | Down -> if posy <= 0 then true else m.(posx).(posy - 1) (* TODO: find better way? *)
       | _ -> false (* do later *)
+
+    method move_down (m : model) : bool = 
+      if this#intersect m Down then false else (posy <- posy - 1; true)
 
     method move_left () = (); 
     method move_right () = (); 

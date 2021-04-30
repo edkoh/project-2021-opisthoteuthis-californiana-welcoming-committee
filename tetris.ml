@@ -15,11 +15,14 @@ let _ =
 
   while true do
     let piece = new tetrimino in
-    while not (piece#intersect m Down) do
-      piece#move_down;
+    while piece#move_down m do
       V.render_model m;
       V.render_piece piece; 
-      Unix.sleepf cTICK_SPEED;
+      let now = Sys.time () in
+      while Sys.time () -. now < cTICK_SPEED do
+      ()
+      done;
+      (* Unix.sleepf cTICK_SPEED; *)
     done;
     piece#add_to_model m;
   done;
