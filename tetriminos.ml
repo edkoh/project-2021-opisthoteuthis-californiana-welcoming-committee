@@ -13,8 +13,10 @@ class square =
     val mutable posx : int = 5
     val mutable posy : int = 20
 
+    (* get_pos () -- Returns a tuple of the positions. *)
     method get_pos : int * int = posx, posy
 
+    (* intersect m a -- Returns true if the action will intersect the model. *)
     method intersect (m : model) (a : action) : bool =
       match a with
       | Left -> if posx <= 0 then true else m.(posx - 1).(posy)
@@ -23,6 +25,8 @@ class square =
       | Drop
       | NoAction -> false
 
+    (* move m a -- Attempts to complete the action with the tetrimino.
+                   Returns true if the action succeeds, false if not. *)
     method move (m : model) (a : action) : bool =
       if this#intersect m a then false else
       match a with
@@ -32,21 +36,9 @@ class square =
       | Drop -> (this#move m Down) && (this#move m Drop)
       | NoAction -> false (* TODO: do later *)
 
-    (*method move_down (m : model) : bool =
-      if this#intersect m Down then false else (posy <- posy - 1; true)
-
-    method move_left () = ();
-    method move_right () = ();
-    *)
-
     method add_to_model (m : model) : unit =
       m.(posx).(posy) <- true
-    (*
-    method gen_model : bool array array =
-      let m = Array.make_matrix cBOARD_X cBOARD_Y false in
-      m.(posx).(posy) <- true; m
-      *)
-  end
+ end
 
 class tetrimino =
   object (this)
