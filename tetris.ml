@@ -6,6 +6,7 @@
  *)
 
 open Config ;;
+open Controller ;;
 open Tetriminos ;;
 module V = Visualization ;;
 
@@ -15,12 +16,12 @@ let _ =
 
   while true do
     let piece = new tetrimino in
-    while piece#move_down m do
+    while piece#move m Down do
       V.render_model m;
       V.render_piece piece; 
       let now = Sys.time () in
       while Sys.time () -. now < cTICK_SPEED do
-      ()
+        if piece#move m (on_capture ()) then ();
       done;
       (* Unix.sleepf cTICK_SPEED; *)
     done;

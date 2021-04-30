@@ -20,6 +20,12 @@ class tetrimino =
       | Down -> if posy <= 0 then true else m.(posx).(posy - 1) (* TODO: find better way? *)
       | _ -> false (* do later *)
 
+    method move (m : model) (a : action) : bool =
+      if this#intersect m a then false else
+      match a with
+      | Down -> (posy <- posy - 1; true)
+      | _ -> false (* TODO: do later *)
+
     method move_down (m : model) : bool = 
       if this#intersect m Down then false else (posy <- posy - 1; true)
 

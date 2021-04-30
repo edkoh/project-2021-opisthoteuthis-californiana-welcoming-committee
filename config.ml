@@ -11,7 +11,8 @@ type action =
   | Right
   | Drop
   | CW
-  | CCW ;;
+  | CCW 
+  | NoAction ;;
 
 type model = bool array array ;;
 
