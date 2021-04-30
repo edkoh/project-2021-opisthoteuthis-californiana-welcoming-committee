@@ -17,11 +17,13 @@ let _ =
   while true do
     let piece = new tetrimino in
     while piece#move m Down do
+      V.render_model m;
+      V.render_piece piece;
       let now = Sys.time () in
       while Sys.time () -. now < cTICK_SPEED do
-        V.render_model m;
-        V.render_piece piece;
-        if piece#move m (on_capture ()) then ()
+        if piece#move m (on_capture ()) then
+          (V.render_model m;
+          V.render_piece piece)
         else ();
       done;
       (* Unix.sleepf cTICK_SPEED; *)
