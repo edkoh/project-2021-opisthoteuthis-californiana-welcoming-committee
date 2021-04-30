@@ -8,12 +8,12 @@
 open Config ;;
 module O = Orientation ;;
 
-class tetrimino =
+class square =
   object (this)
     val mutable posx : int = 5
     val mutable posy : int = 20
 
-    method get_pos : int * int list = [(posx, posy)]
+    method get_pos : int * int = posx, posy
 
     method intersect (m : model) (a : action) : bool =
       match a with
@@ -46,6 +46,11 @@ class tetrimino =
       let m = Array.make_matrix cBOARD_X cBOARD_Y false in
       m.(posx).(posy) <- true; m
       *)
+  end
+
+class tetrimino =
+  object (this)
+    inherit square
   end
 
 class twopiece =

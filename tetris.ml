@@ -24,7 +24,7 @@ let _ =
         if piece#move m (on_capture ()) then
           (V.render_model m;
           V.render_piece piece)
-        else ();
+        else (); (* play sound *)
       done;
       (* Unix.sleepf cTICK_SPEED; *)
     done;
