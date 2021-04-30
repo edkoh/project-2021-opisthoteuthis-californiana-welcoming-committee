@@ -7,6 +7,7 @@
 
 open Config ;;
 module V = Visualization ;;
+module Ctrl = Controller ;;
 
 let m = Array.make_matrix cBOARD_X cBOARD_Y false ;;
 
