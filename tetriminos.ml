@@ -48,9 +48,15 @@ class tetrimino =
       *)
   end
 
+class twopiece =
+  object (this)
+    inherit tetrimino
+
+  end
+
 (*
 class ipiece (initx : int) (inity : int) =
-  object (self)
+  object (this)
     inherit tetrimino initx inity as super
 
     val ori = new O.orientation
