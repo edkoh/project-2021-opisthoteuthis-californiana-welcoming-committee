@@ -29,14 +29,14 @@ class square (initx : int) (inity : int) =
 
     (* move m a center -- Attempts to complete the action with the tetrimino.
                           Returns true if the action succeeds, false if not. *)
-    method move ?(center = (posx, posy)) (m : model) (a : action) : unit =
+    method move (center : int * int) (m : model) (a : action) : unit =
       match a with
       | Left -> (posx <- posx - 1)
       | Down -> (posy <- posy - 1)
       | Right -> (posx <- posx + 1)
       (*| CW ->
       | CCW ->*)
-      | Drop -> (this#move m Down; this#move m Drop)
+      | Drop -> (this#move center m Down; this#move center m Drop)
       | NoAction -> ()
 
     method add_to_model (m : model) : unit =
@@ -54,9 +54,9 @@ class tetrimino (p : piece)=
 
     method move (m : model) (a : action) : bool =
       if a = NoAction then false
-      else if List.fold_right (fun sq -> (&&) (sq#intersect m a)) square_list true then false
+      else if List.fold_right (fun sq -> (||) (sq#intersect (List.hd square_list)#get_pos m a)) square_list false then false
       else
-        List.iter (fun sq -> (sq#move (List.hd square_list)#get_pos m a)) square_list; true
+        (List.iter (fun sq -> sq#move (List.hd square_list)#get_pos m a) square_list; true)
 
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model m) square_list
