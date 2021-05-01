@@ -24,7 +24,7 @@ class square =
       | NoAction -> false
 
     method move (m : model) (a : action) : bool =
-      if this#intersect m a then false else
+      (* if this#intersect m a then false else *)
       match a with
       | Left -> (posx <- posx - 1; true)
       | Down -> (posy <- posy - 1; true)
@@ -50,7 +50,10 @@ class square =
 
 class tetrimino =
   object (this)
-    inherit square
+    (* inherit square *)
+    val center = new square
+    method move (m : model) (a : action) : bool =
+      List.fold_left (fun x -> (&&) (x#move m a)) true
   end
 
 class twopiece =
