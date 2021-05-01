@@ -36,7 +36,7 @@ class square (initx : int) (inity : int) =
       | Right -> (posx <- posx + 1)
       (*| CW ->
       | CCW ->*)
-      | Drop -> (this#move center m Down; this#move center m Drop)
+      | Drop -> ()
       | NoAction -> ()
 
     method add_to_model (m : model) : unit =
@@ -44,7 +44,7 @@ class square (initx : int) (inity : int) =
  end
 
 class tetrimino (p : piece)=
-  object
+  object (this)
     (* val mutable center = new square 5 20 *)
     val square_list = (new square 5 20) ::
       (match p with
@@ -54,6 +54,7 @@ class tetrimino (p : piece)=
 
     method move (m : model) (a : action) : bool =
       if a = NoAction then false
+      else if a = Drop then (this#move m Down) && (this#move m Drop)
       else if List.fold_right (fun sq -> (||) (sq#intersect (List.hd square_list)#get_pos m a)) square_list false then false
       else
         (List.iter (fun sq -> sq#move (List.hd square_list)#get_pos m a) square_list; true)
