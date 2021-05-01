@@ -25,9 +25,9 @@ class square =
       | Drop
       | NoAction -> false
 
-    (* move m a -- Attempts to complete the action with the tetrimino.
-                   Returns true if the action succeeds, false if not. *)
-    method move (m : model) (a : action) : bool =
+    (* move m a center -- Attempts to complete the action with the tetrimino.
+                          Returns true if the action succeeds, false if not. *)
+    method move (m : model) (a : action) ?(center = this : square) : bool =
       (* if this#intersect m a then false else *)
       match a with
       | Left -> (posx <- posx - 1; true)
