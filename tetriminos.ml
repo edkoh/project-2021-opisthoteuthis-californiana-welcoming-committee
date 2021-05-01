@@ -19,9 +19,9 @@ class square =
     (* intersect m a -- Returns true if the action will intersect the model. *)
     method intersect (m : model) (a : action) : bool =
       match a with
-      | Left -> if posx <= 0 then true else m.(posx - 1).(posy)
-      | Down -> if posy <= 0 then true else m.(posx).(posy - 1) (* TODO: find better way? *)
-      | Right -> if posx >= 9 then true else m.(posx + 1).(posy)
+      | Left -> if posx <= 0 then true else m.(posy).(posx - 1)
+      | Down -> if posy <= 0 then true else m.(posy - 1).(posx) (* TODO: find better way? *)
+      | Right -> if posx >= 9 then true else m.(posy).(posx + 1)
       | Drop
       | NoAction -> false
 
@@ -37,7 +37,7 @@ class square =
       | NoAction -> false (* TODO: do later *)
 
     method add_to_model (m : model) : unit =
-      m.(posx).(posy) <- true
+      m.(posy).(posx) <- true
  end
 
 class tetrimino =
