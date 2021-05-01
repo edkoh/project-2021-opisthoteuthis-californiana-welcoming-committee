@@ -6,9 +6,8 @@
 open Config ;;
 module G = Graphics ;;
 
+(* on_capture () *)
 let on_capture () : action =
-  (*let event = G.wait_next_event [Key_pressed; Poll] in
-  match event.key with*)
   if G.key_pressed () then
     match G.read_key () with
     | 'w' -> Drop

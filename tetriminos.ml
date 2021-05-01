@@ -54,7 +54,7 @@ class tetrimino (p : piece)=
     method get_pos : (int * int) list =
       List.map (fun sq -> sq#get_pos) square_list
 
-    (* sq_full pos m -- Returns true if the square in the model is filled. *)
+    (* sq_full pos m -- Returns true if the square in the model is filled or out of bounds. *)
     method sq_full ((posx, posy) : int * int) (m : model) : bool =
       posx < 0 || posx > 9 || posy < 0 || (posy < 20 && m.(posy).(posx))
 

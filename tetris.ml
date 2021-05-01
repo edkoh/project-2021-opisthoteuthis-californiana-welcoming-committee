@@ -21,6 +21,7 @@ let clear_lines (m : model) : unit =
 ;;
 
 let random_piece : unit -> piece =
+  Random.self_init ();
   fun () ->
   match Random.int 7 with
   | 0 -> I
@@ -30,8 +31,6 @@ let random_piece : unit -> piece =
   | 4 -> S
   | 5 -> T
   | 6 -> Z ;;
-
-
 
 let _ =
   V.init_graph ();
