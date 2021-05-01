@@ -6,7 +6,6 @@
  *)
 
 open Config ;;
-module O = Orientation ;;
 
 class square (initx : int) (inity : int) =
   object
@@ -34,7 +33,7 @@ class square (initx : int) (inity : int) =
 
     method add_to_model (m : model) : unit =
       m.(posy).(posx) <- true
- end
+  end
 
 class tetrimino (p : piece)=
   object (this)
