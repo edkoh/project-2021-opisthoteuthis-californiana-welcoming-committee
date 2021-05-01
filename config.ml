@@ -14,6 +14,9 @@ type action =
   | CCW
   | NoAction ;;
 
+type piece =
+  | X ;;
+
 type model = bool array array ;;
 
 

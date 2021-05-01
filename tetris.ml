@@ -14,7 +14,7 @@ let clear_lines (m : model) : unit =
   let shift = ref 0 in
   for row = 0 to cBOARD_Y - 1 do
     if Array.fold_left (&&) true m.(row) then incr shift;
-    if row + !shift < cBOARD_Y then 
+    if row + !shift < cBOARD_Y then
       m.(row) <- m.(row + !shift)
     else m.(row) <- Array.make cBOARD_X false (* TODO: find a better way? *)
   done;
@@ -26,7 +26,7 @@ let _ =
   let m = Array.make_matrix cBOARD_Y cBOARD_X false in
 
   while true do
-    let piece = new tetrimino in
+    let piece = new tetrimino X in
     while piece#move m Down do
       V.render_model m;
       V.render_piece piece;

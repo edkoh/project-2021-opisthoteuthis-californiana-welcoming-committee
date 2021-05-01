@@ -57,7 +57,7 @@ let render_model (m : bool array array) : unit =
 
 (* perhaps put in tetriminos? *)
 let render_piece (t : tetrimino) : unit =
-  fill_square (t#get_pos) G.blue
+  List.iter (fun pos -> fill_square pos G.blue) t#get_pos
 ;;
 
 
