@@ -9,35 +9,28 @@ open Config ;;
 module O = Orientation ;;
 
 class square (initx : int) (inity : int) =
-  object (this)
+  object
     val mutable posx : int = initx
     val mutable posy : int = inity
 
     (* get_pos () -- Returns a tuple of the positions. *)
     method get_pos : int * int = posx, posy
 
-    (* intersect m a -- Returns true if the action will intersect the model. *)
-    method intersect (center : int * int) (m : model) (a : action) : bool =
-      match a with
-      | Left -> if posx <= 0 then true else m.(posy).(posx - 1)
-      | Down -> if posy <= 0 then true else m.(posy - 1).(posx) (* TODO: find better way? *)
-      | Right -> if posx >= 9 then true else m.(posy).(posx + 1)
-      (*| CW ->
-      | CCW ->*)
-      | Drop
-      | NoAction -> false
+    method set_pos (x, y : int * int) : unit =
+      posx <- x;
+      posy <- y
 
-    (* move m a center -- Attempts to complete the action with the tetrimino.
+    (* move center a -- Attempts to complete the action with the tetrimino.
                           Returns true if the action succeeds, false if not. *)
-    method move (center : int * int) (m : model) (a : action) : unit =
+    method move ((cx, cy) : int * int) (a : action) : int * int =
       match a with
-      | Left -> (posx <- posx - 1)
-      | Down -> (posy <- posy - 1)
-      | Right -> (posx <- posx + 1)
-      (*| CW ->
-      | CCW ->*)
-      | Drop -> ()
-      | NoAction -> ()
+      | Left -> (posx - 1), posy
+      | Down -> posx, (posy - 1)
+      | Right -> (posx + 1), posy
+      | CW -> (cx + posy - cy), (cy - posx + cx) (* derived from 90 degree rotation matrix *)
+      | CCW -> (cx - posy + cy), (cy + posx - cx) (* similarly to above *)
+      | Drop
+      | NoAction -> (0, 0)
 
     method add_to_model (m : model) : unit =
       m.(posy).(posx) <- true
@@ -48,16 +41,35 @@ class tetrimino (p : piece)=
     (* val mutable center = new square 5 20 *)
     val square_list = (new square 5 20) ::
       (match p with
-       | X -> [new square 4 20])
+       | I -> [new square 4 20]
+       | J -> [new square 4 20]
+       | L -> [new square 4 20]
+       | O -> [new square 4 20]
+       | S -> [new square 4 20]
+       | T -> [new square 4 20]
+       | Z -> [new square 4 20])
 
     method get_pos : (int * int) list = List.map (fun sq -> sq#get_pos) square_list
+
+    (* sq_full pos m -- Returns true if the square in the model is filled. *)
+    method sq_full ((posx, posy) : int * int) (m : model) : bool =
+      posx < 0 || posx > 9 || posy < 0 || posy > 19 || m.(posy).(posx)
 
     method move (m : model) (a : action) : bool =
       if a = NoAction then false
       else if a = Drop then (this#move m Down) && (this#move m Drop)
+      else
+        let center = (List.hd square_list)#get_pos in
+        let shifted = List.map (fun sq -> sq#move center a) square_list in
+        if List.fold_right (fun pos -> (||) (this#sq_full pos m)) shifted false then false
+        else
+          (List.iter2 (fun sq pos -> sq#set_pos pos) square_list shifted; true)
+
+      (*if a = NoAction then false
+      else if a = Drop then (this#move m Down) && (this#move m Drop)
       else if List.fold_right (fun sq -> (||) (sq#intersect (List.hd square_list)#get_pos m a)) square_list false then false
       else
-        (List.iter (fun sq -> sq#move (List.hd square_list)#get_pos m a) square_list; true)
+        (List.iter (fun sq -> sq#move (List.hd square_list)#get_pos m a) square_list; true)*)
 
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model m) square_list

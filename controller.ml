@@ -15,6 +15,8 @@ let on_capture () : action =
     | 'a' -> Left
     | 's' -> Down
     | 'd' -> Right
+    | ',' -> CCW
+    | '.' -> CW
     | _ -> NoAction
   else NoAction ;;
   (*

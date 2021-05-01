@@ -15,7 +15,13 @@ type action =
   | NoAction ;;
 
 type piece =
-  | X ;;
+  | I
+  | J
+  | L
+  | O
+  | S
+  | T
+  | Z ;;
 
 type model = bool array array ;;
 
