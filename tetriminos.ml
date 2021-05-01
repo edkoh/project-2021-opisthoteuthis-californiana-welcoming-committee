@@ -39,17 +39,18 @@ class square (initx : int) (inity : int) =
 class tetrimino (p : piece)=
   object (this)
     (* val mutable center = new square 5 20 *)
-    val square_list = (new square 5 20) ::
+    val square_list = (new square 4 20) ::
       (match p with
-       | I -> [new square 4 20]
-       | J -> [new square 4 20]
-       | L -> [new square 4 20]
-       | O -> [new square 4 20]
-       | S -> [new square 4 20]
-       | T -> [new square 4 20]
-       | Z -> [new square 4 20])
+       | I -> [new square 3 20; new square 5 20; new square 6 20]
+       | J -> [new square 3 21; new square 3 20; new square 5 20]
+       | L -> [new square 3 20; new square 5 20; new square 5 21]
+       | O -> [new square 4 21; new square 5 20; new square 5 21]
+       | S -> [new square 3 20; new square 4 21; new square 5 21]
+       | T -> [new square 3 20; new square 4 19; new square 5 20]
+       | Z -> [new square 3 21; new square 4 21; new square 5 20])
 
-    method get_pos : (int * int) list = List.map (fun sq -> sq#get_pos) square_list
+    method get_pos : (int * int) list =
+      List.map (fun sq -> sq#get_pos) square_list
 
     (* sq_full pos m -- Returns true if the square in the model is filled. *)
     method sq_full ((posx, posy) : int * int) (m : model) : bool =
@@ -73,11 +74,6 @@ class tetrimino (p : piece)=
 
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model m) square_list
-  end
-
-class twopiece =
-  object
-    inherit tetrimino X
   end
 
 (*

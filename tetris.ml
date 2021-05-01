@@ -26,7 +26,7 @@ let _ =
   let m = Array.make_matrix cBOARD_Y cBOARD_X false in
 
   while true do
-    let piece = new tetrimino X in
+    let piece = new tetrimino T in
     while piece#move m Down do
       V.render_model m;
       V.render_piece piece;
