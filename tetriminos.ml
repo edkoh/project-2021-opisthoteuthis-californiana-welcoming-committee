@@ -57,7 +57,7 @@ class tetrimino (p : piece)=
       List.fold_left (fun b sq -> (&&) b (sq#move m a)) true square_list
 
     method add_to_model (m : model) : unit =
-      List.iter (fun sq -> sq#add_to_model) square_list
+      List.iter (fun sq -> sq#add_to_model m) square_list
   end
 
 class twopiece =
