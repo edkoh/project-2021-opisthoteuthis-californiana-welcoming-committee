@@ -17,7 +17,7 @@ class square (initx : int) (inity : int) =
     method get_pos : int * int = posx, posy
 
     (* intersect m a -- Returns true if the action will intersect the model. *)
-    method intersect center = (posx, posy) (m : model) (a : action) : unit =
+    method intersect (center : int * int) (m : model) (a : action) : bool =
       match a with
       | Left -> if posx <= 0 then true else m.(posy).(posx - 1)
       | Down -> if posy <= 0 then true else m.(posy - 1).(posx) (* TODO: find better way? *)
@@ -36,7 +36,7 @@ class square (initx : int) (inity : int) =
       | Right -> (posx <- posx + 1)
       (*| CW ->
       | CCW ->*)
-      | Drop -> (this#move center m Down; this#move center m Drop)
+      | Drop -> (this#move m Down; this#move m Drop)
       | NoAction -> ()
 
     method add_to_model (m : model) : unit =
