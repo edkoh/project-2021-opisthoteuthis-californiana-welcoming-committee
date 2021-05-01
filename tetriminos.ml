@@ -46,15 +46,15 @@ class square (initx : int) (inity : int) =
 
 class tetrimino (p : piece)=
   object (this)
-    val mutable center = new square 5 20
-    val square_list = center ::
+    (* val mutable center = new square 5 20 *)
+    val square_list = (new square 5 20) ::
       (match p with
        | X -> [new square 4 20])
 
-    method get_pos : int * int list = List.map (fun sq -> sq#get_pos) square_list
+    method get_pos : (int * int) list = List.map (fun sq -> sq#get_pos) square_list
 
     method move (m : model) (a : action) : bool =
-      List.fold_left (fun sq -> (&&) (sq#move m a)) true square_list
+      List.fold_left (fun b sq -> (&&) b (sq#move m a)) true square_list
 
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model) square_list
