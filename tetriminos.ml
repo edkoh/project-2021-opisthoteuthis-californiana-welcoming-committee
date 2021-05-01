@@ -17,22 +17,26 @@ class square =
     method get_pos : int * int = posx, posy
 
     (* intersect m a -- Returns true if the action will intersect the model. *)
-    method intersect (m : model) (a : action) : bool =
+    method intersect (m : model) (a : action) ?(center = (posx, posy)) : bool =
       match a with
       | Left -> if posx <= 0 then true else m.(posy).(posx - 1)
       | Down -> if posy <= 0 then true else m.(posy - 1).(posx) (* TODO: find better way? *)
       | Right -> if posx >= 9 then true else m.(posy).(posx + 1)
+      | CW ->
+      | CCW ->
       | Drop
       | NoAction -> false
 
     (* move m a center -- Attempts to complete the action with the tetrimino.
                           Returns true if the action succeeds, false if not. *)
-    method move (m : model) (a : action) ?(center = this : square) : bool =
-      (* if this#intersect m a then false else *)
+    method move (m : model) (a : action) ?(center = (posx, posy)) : bool =
+      if this#intersect m a then false else
       match a with
       | Left -> (posx <- posx - 1; true)
       | Down -> (posy <- posy - 1; true)
       | Right -> (posx <- posx + 1; true)
+      | CW ->
+      | CCW ->
       | Drop -> (this#move m Down) && (this#move m Drop)
       | NoAction -> false (* TODO: do later *)
 
