@@ -54,7 +54,7 @@ class tetrimino (p : piece)=
 
     method move (m : model) (a : action) : bool =
       if a = NoAction then false
-      else if List.fold_right (fun sq -> sq#intersect m a) square_list true then false
+      else if List.fold_right (fun sq -> (&&) (sq#intersect m a)) square_list true then false
       else
         List.iter (fun sq -> (sq#move (List.hd square_list)#get_pos m a)) square_list; true
 
