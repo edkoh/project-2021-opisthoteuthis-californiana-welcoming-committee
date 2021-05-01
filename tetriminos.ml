@@ -38,8 +38,11 @@ class square (initx : int) (inity : int) =
 
 class tetrimino (p : piece)=
   object (this)
-    (* val mutable center = new square 5 20 *)
-    val square_list = (new square 4 20) ::
+    val center = new square 4 20
+    val mutable square_list = []
+
+    initializer
+      square_list <- center ::
       (match p with
        | I -> [new square 3 20; new square 5 20; new square 6 20]
        | J -> [new square 3 21; new square 3 20; new square 5 20]
