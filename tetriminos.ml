@@ -78,16 +78,3 @@ class tetrimino (p : piece)=
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model m) square_list
   end
-
-(*
-class ipiece (initx : int) (inity : int) =
-  object (this)
-    inherit tetrimino initx inity as super
-
-    val ori = new O.orientation
-
-    initializer
-      orientation
-
-
-*)

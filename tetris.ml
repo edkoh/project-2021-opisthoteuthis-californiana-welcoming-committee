@@ -20,13 +20,26 @@ let clear_lines (m : model) : unit =
   done;
 ;;
 
+let random_piece : unit -> piece =
+  fun () ->
+  match Random.int 7 with
+  | 0 -> I
+  | 1 -> J
+  | 2 -> L
+  | 3 -> O
+  | 4 -> S
+  | 5 -> T
+  | 6 -> Z ;;
+
+
+
 let _ =
   V.init_graph ();
   (* comment *)
   let m = Array.make_matrix cBOARD_Y cBOARD_X false in
 
   while true do
-    let piece = new tetrimino T in
+    let piece = new tetrimino (random_piece ()) in
     while piece#move m Down do
       V.render_model m;
       V.render_piece piece;

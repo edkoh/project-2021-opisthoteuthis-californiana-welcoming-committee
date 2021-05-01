@@ -19,12 +19,3 @@ let on_capture () : action =
     | '.' -> CW
     | _ -> NoAction
   else NoAction ;;
-  (*
-  (if event.keypressed then (G.draw_string (String.make 1 event.key)));
-  on_capture ()
-
-let _ =
-  G.open_graph "";
-  on_capture ();
-  G.close_graph ();
-  *)
