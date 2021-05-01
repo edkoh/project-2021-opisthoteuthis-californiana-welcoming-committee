@@ -17,7 +17,7 @@ class square (initx : int) (inity : int) =
     method get_pos : int * int = posx, posy
 
     (* intersect m a -- Returns true if the action will intersect the model. *)
-    method intersect ?(center = (posx, posy)) (m : model) (a : action) : bool =
+    method intersect center = (posx, posy) (m : model) (a : action) : unit =
       match a with
       | Left -> if posx <= 0 then true else m.(posy).(posx - 1)
       | Down -> if posy <= 0 then true else m.(posy - 1).(posx) (* TODO: find better way? *)
@@ -29,23 +29,22 @@ class square (initx : int) (inity : int) =
 
     (* move m a center -- Attempts to complete the action with the tetrimino.
                           Returns true if the action succeeds, false if not. *)
-    method move ?(center = (posx, posy)) (m : model) (a : action) : bool =
-      if this#intersect m a then false else
+    method move ?(center = (posx, posy)) (m : model) (a : action) : unit =
       match a with
-      | Left -> (posx <- posx - 1; true)
-      | Down -> (posy <- posy - 1; true)
-      | Right -> (posx <- posx + 1; true)
+      | Left -> (posx <- posx - 1)
+      | Down -> (posy <- posy - 1)
+      | Right -> (posx <- posx + 1)
       (*| CW ->
       | CCW ->*)
-      | Drop -> (this#move m Down) && (this#move m Drop)
-      | NoAction -> false (* TODO: do later *)
+      | Drop -> (this#move center m Down; this#move center m Drop)
+      | NoAction -> ()
 
     method add_to_model (m : model) : unit =
       m.(posy).(posx) <- true
  end
 
 class tetrimino (p : piece)=
-  object (this)
+  object
     (* val mutable center = new square 5 20 *)
     val square_list = (new square 5 20) ::
       (match p with
@@ -54,14 +53,17 @@ class tetrimino (p : piece)=
     method get_pos : (int * int) list = List.map (fun sq -> sq#get_pos) square_list
 
     method move (m : model) (a : action) : bool =
-      List.fold_left (fun b sq -> (&&) b (sq#move m a)) true square_list
+      if a = NoAction then false
+      else if List.fold_right (fun sq -> sq#intersect m a) square_list true then false
+      else
+        List.iter (fun sq -> (sq#move (List.hd square_list)#get_pos m a)) square_list; true
 
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model m) square_list
   end
 
 class twopiece =
-  object (this)
+  object
     inherit tetrimino X
   end
 
