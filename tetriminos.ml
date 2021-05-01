@@ -46,7 +46,7 @@ class tetrimino (p : piece)=
        | L -> [new square 3 20; new square 5 20; new square 5 21]
        | O -> [new square 4 21; new square 5 20; new square 5 21]
        | S -> [new square 3 20; new square 4 21; new square 5 21]
-       | T -> [new square 3 20; new square 4 19; new square 5 20]
+       | T -> [new square 3 20; new square 4 21; new square 5 20]
        | Z -> [new square 3 21; new square 4 21; new square 5 20])
 
     method get_pos : (int * int) list =
@@ -54,7 +54,7 @@ class tetrimino (p : piece)=
 
     (* sq_full pos m -- Returns true if the square in the model is filled. *)
     method sq_full ((posx, posy) : int * int) (m : model) : bool =
-      posx < 0 || posx > 9 || posy < 0 || posy > 19 || m.(posy).(posx)
+      posx < 0 || posx > 9 || posy < 0 || (posy < 20 && m.(posy).(posx))
 
     method move (m : model) (a : action) : bool =
       if a = NoAction then false
