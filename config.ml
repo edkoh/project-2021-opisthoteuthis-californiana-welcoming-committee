@@ -23,8 +23,9 @@ type piece =
   | T
   | Z ;;
 
-type model = bool array array ;;
 
+(* new model file *)
+type model = bool array array ;;
 
 let cTICK_SPEED = 200. /. 1000. ;;
 let cBOARD_X = 10 ;;
