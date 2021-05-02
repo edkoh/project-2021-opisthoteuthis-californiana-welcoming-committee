@@ -38,7 +38,7 @@ class square (initx : int) (inity : int) =
 
 class tetrimino (p : piece)=
   object (this)
-    val center = new square ((cBOARD_X - 1)/2) cBOARD_Y
+    val center = new square ((cBOARD_X - 1)/2) (cBOARD_Y + 1)
     val mutable square_list = []
 
     initializer

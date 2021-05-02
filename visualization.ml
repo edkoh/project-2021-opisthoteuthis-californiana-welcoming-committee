@@ -49,7 +49,7 @@ let fill_square ((x, y) : int * int) (c : G.color) : unit =
 
 let render_model (m : model) (score : int) : unit =
   G.clear_graph ();
-  G.moveto (cBOARD_X * cBLOCK_SIZE / 2 - 20) (cBOARD_Y * cBLOCK_SIZE);
+  G.moveto (cBOARD_X * cBLOCK_SIZE / 2 - 20) ((cBOARD_Y + 1) * cBLOCK_SIZE);
   G.draw_string ("SCORE: " ^ string_of_int score);
   for i = 0 to (Array.length m) - 1 do
     for j = 0 to (Array.length m.(i)) - 1 do
