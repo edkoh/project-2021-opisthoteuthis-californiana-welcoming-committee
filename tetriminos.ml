@@ -6,6 +6,7 @@
  *)
 
 open Config ;;
+open Model ;;
 
 class square (initx : int) (inity : int) =
   object
@@ -69,10 +70,6 @@ class tetrimino (p : piece)=
     method get_pos : (int * int) list =
       List.map (fun sq -> sq#get_pos) square_list
 
-      (* sq_full pos m -- Returns true if the square in the model is filled or out of bounds. *)
-    method sq_full ((posx, posy) : int * int) (m : model) : bool =
-      posx < 0 || posx > cBOARD_X - 1 || posy < 0 || (posy < cBOARD_Y && m.(posy).(posx))
-
     (*  *)
     method move (m : model) (a : action) : bool =
       if a = NoAction then false
@@ -80,7 +77,7 @@ class tetrimino (p : piece)=
       else
         let cpos = center#get_pos in
         let shifted = List.map (fun sq -> sq#move cpos a) square_list in
-        if List.fold_right (fun pos -> (||) (this#sq_full pos m)) shifted false then false
+        if List.fold_right (fun pos -> (||) (sq_full pos m)) shifted false then false
         else
           (List.iter2 (fun sq pos -> sq#set_pos pos) square_list shifted; true)
 
