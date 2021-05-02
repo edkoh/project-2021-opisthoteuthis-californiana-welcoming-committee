@@ -44,8 +44,10 @@ let fill_square ((x, y) : int * int) (c : G.color) : unit =
 
 let render_model (m : model) (score : int) : unit =
   G.clear_graph ();
+  G.moveto 0 ((cBOARD_Y + 2) * cBLOCK_SIZE - 10);
+  G.draw_string " CONTROLS:   Move: WASD   |   Rotate:   ccw | cw:  <  |  >"; (* Controls display *)
   G.moveto (cBOARD_X * cBLOCK_SIZE / 2 - 20) ((cBOARD_Y + 1) * cBLOCK_SIZE);
-  G.draw_string ("SCORE: " ^ string_of_int score);
+  G.draw_string ("SCORE: " ^ string_of_int score); (* Score display *)
   for i = 0 to (Array.length m) - 1 do
     for j = 0 to (Array.length m.(i)) - 1 do
       if m.(i).(j) then fill_square (j, i) G.blue;
