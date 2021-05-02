@@ -84,12 +84,6 @@ class tetrimino (p : piece)=
         else
           (List.iter2 (fun sq pos -> sq#set_pos pos) square_list shifted; true)
 
-      (*if a = NoAction then false
-      else if a = Drop then (this#move m Down) && (this#move m Drop)
-      else if List.fold_right (fun sq -> (||) (sq#intersect (List.hd square_list)#get_pos m a)) square_list false then false
-      else
-        (List.iter (fun sq -> sq#move (List.hd square_list)#get_pos m a) square_list; true)*)
-
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model m) square_list
   end
