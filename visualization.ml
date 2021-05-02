@@ -34,6 +34,7 @@ let draw_grid_lines () =
 
 let init_graph () =
   G.open_graph (" " ^ string_of_int screenx ^ "x" ^ string_of_int (screeny + 4 * cBOARD_Y));
+  G.set_window_title "OCaml Tetris!";
   G.draw_rect 0 0 screenx (screeny + 4 * cBOARD_Y); (* extra computation here instead of in definition
                                                        of screeny so as to slightly reduce computation*)
   draw_grid_lines () ;;
