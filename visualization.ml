@@ -58,7 +58,7 @@ let render_model (m : bool array array) : unit =
 (* perhaps put in tetriminos? *)
 let render_piece (t : tetrimino) : unit =
   List.iter (fun pos -> fill_square pos G.blue)
-    (List.filter (fun (_,y) -> y < 20) t#get_pos)
+    (List.filter (fun (_,y) -> y < cBOARD_Y) t#get_pos)
 ;;
 
 

@@ -56,7 +56,7 @@ class tetrimino (p : piece)=
 
       (* sq_full pos m -- Returns true if the square in the model is filled or out of bounds. *)
     method sq_full ((posx, posy) : int * int) (m : model) : bool =
-      posx < 0 || posx > 9 || posy < 0 || (posy < 20 && m.(posy).(posx))
+      posx < 0 || posx > cBOARD_X - 1 || posy < 0 || (posy < cBOARD_Y && m.(posy).(posx))
 
     (*  *)
     method move (m : model) (a : action) : bool =
