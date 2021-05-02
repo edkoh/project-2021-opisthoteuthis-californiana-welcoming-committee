@@ -28,8 +28,8 @@ class square (initx : int) (inity : int) =
       | Right -> (posx + 1), posy
       | CW -> (cx + posy - cy), (cy - posx + cx) (* derived from 90 degree rotation matrix *)
       | CCW -> (cx - posy + cy), (cy + posx - cx) (* similarly to above *)
-      | Drop
       | NoAction -> (0, 0)
+      | Drop -> failwith "Squares shouldn't drop"
 
     method add_to_model (m : model) : unit =
       m.(posy).(posx) <- true
@@ -37,19 +37,34 @@ class square (initx : int) (inity : int) =
 
 class tetrimino (p : piece)=
   object (this)
-    val center = new square 4 20
+    val center = new square ((cBOARD_X - 1)/2) cBOARD_Y
     val mutable square_list = []
 
     initializer
       square_list <- center ::
-      (match p with
-       | I -> [new square 3 20; new square 5 20; new square 6 20]
-       | J -> [new square 3 21; new square 3 20; new square 5 20]
-       | L -> [new square 3 20; new square 5 20; new square 5 21]
-       | O -> [new square 4 21; new square 5 20; new square 5 21]
-       | S -> [new square 3 20; new square 4 21; new square 5 21]
-       | T -> [new square 3 20; new square 4 21; new square 5 20]
-       | Z -> [new square 3 21; new square 4 21; new square 5 20])
+      (let (cx, cy) = center#get_pos in      (* Chose to sacrifice brevity in order to remove hardcoding *)
+        match p with
+       | I -> [new square (cx - 1) cy;
+               new square (cx + 1) cy;
+               new square (cx + 2) cy]
+       | J -> [new square (cx - 1) (cy + 1);
+               new square (cx - 1) cy;
+               new square (cx + 1) cy]
+       | L -> [new square (cx - 1) cy;
+               new square (cx + 1) cy;
+               new square (cx + 1) (cy + 1)]
+       | O -> [new square cx (cy + 1);
+               new square (cx + 1) cy;
+               new square (cx + 1) (cy + 1)]
+       | S -> [new square (cx - 1) cy;
+               new square cx (cy + 1);
+               new square (cx + 1) (cy + 1)]
+       | T -> [new square (cx - 1) cy;
+               new square cx (cy + 1);
+               new square (cx + 1) cy]
+       | Z -> [new square (cx - 1) (cy + 1);
+               new square cx (cy + 1);
+               new square (cx + 1) cy])
 
     method get_pos : (int * int) list =
       List.map (fun sq -> sq#get_pos) square_list

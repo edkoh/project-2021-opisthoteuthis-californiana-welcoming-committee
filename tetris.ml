@@ -32,7 +32,7 @@ let random_piece : unit -> piece =
     | 4 -> S
     | 5 -> T
     | 6 -> Z
-    | _ -> failwith "uh-oh" ;; (* TODO *)
+    | _ -> failwith "No such piece matches random generator output" ;;
 
 let _ =
   V.init_graph ();
