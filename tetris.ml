@@ -13,11 +13,11 @@ module V = Visualization ;;
 let clear_lines (m : model) : unit =
   let shift = ref 0 in
   for row = 0 to cBOARD_Y - 1 do
-    (if row + !shift < cBOARD_Y then
-      m.(row - !shift) <- m.(row)
-    else (m.(row) <- Array.make cBOARD_X false; (* TODO: find a better way? *)
-          m.(row - !shift) <- Array.make cBOARD_X false));
+    m.(row - !shift) <- m.(row);
     if Array.fold_left (&&) true m.(row) then incr shift
+  done;
+  for row = (cBOARD_Y - !shift) to cBOARD_Y - 1 do
+    m.(row) <- Array.make cBOARD_X false; (* TODO: find a better way? *)
   done;
 ;;
 
