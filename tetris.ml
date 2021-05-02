@@ -44,9 +44,10 @@ let _ =
         );
       done;
     done;
-    if List.exists (fun (_, y) -> y > cBOARD_Y) piece#get_pos then failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
+    if List.exists (fun (_, y) -> y > cBOARD_Y) piece#get_pos then
+      failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
     else
       piece#add_to_model m;
       score := !score + (clear_lines m);
-      (* G.sound 800 200; Graphics sound function doesn't work *)
+      (* G.sound 800 200; Graphics sound function not compatible with system *)
   done;

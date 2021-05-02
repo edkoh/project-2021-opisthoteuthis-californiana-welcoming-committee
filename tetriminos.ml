@@ -75,8 +75,7 @@ class tetrimino (p : piece)=
       if a = NoAction then false
       else if a = Drop then (this#move m Down) && (this#move m Drop)
       else
-        let cpos = center#get_pos in
-        let shifted = List.map (fun sq -> sq#move cpos a) square_list in
+        let shifted = List.map (fun sq -> sq#move center#get_pos a) square_list in
         if List.fold_right (fun pos -> (||) (sq_full pos m)) shifted false then false
         else
           (List.iter2 (fun sq pos -> sq#set_pos pos) square_list shifted; true)
