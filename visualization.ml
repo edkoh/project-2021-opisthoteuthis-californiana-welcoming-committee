@@ -32,20 +32,15 @@ let draw_grid_lines () =
   done;
 ;;
 
-
 let init_graph () =
   G.open_graph (" " ^ string_of_int screenx ^ "x" ^ string_of_int (screeny + 4 * cBOARD_Y));
   G.draw_rect 0 0 screenx (screeny + 4 * cBOARD_Y); (* extra computation here instead of in definition
                                                        of screeny so as to slightly reduce computation*)
-  draw_grid_lines ();
-;;
-
+  draw_grid_lines () ;;
 
 let fill_square ((x, y) : int * int) (c : G.color) : unit =
   G.set_color c;
-  G.fill_rect (x * cBLOCK_SIZE) (y * cBLOCK_SIZE) cBLOCK_SIZE cBLOCK_SIZE;
-;;
-
+  G.fill_rect (x * cBLOCK_SIZE) (y * cBLOCK_SIZE) cBLOCK_SIZE cBLOCK_SIZE ;;
 
 let render_model (m : model) (score : int) : unit =
   G.clear_graph ();
@@ -56,11 +51,8 @@ let render_model (m : model) (score : int) : unit =
       if m.(i).(j) then fill_square (j, i) G.blue;
     done;
   done;
-  draw_grid_lines ();
-;;
+  draw_grid_lines () ;;
 
 (* perhaps put in tetriminos? *)
 let render_piece (t : tetrimino) : unit =
-  List.iter (fun pos -> fill_square pos G.blue) t#get_pos;
-    (* (List.filter (fun (_,y) -> y < cBOARD_Y) t#get_pos); *)
-;;
+  List.iter (fun pos -> fill_square pos G.blue) t#get_pos ;;
