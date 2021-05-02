@@ -13,7 +13,7 @@ type model = bool array array ;;
 
 (* sq_full pos m -- Returns true if the square in the model is filled or out of bounds. *)
 let sq_full ((posx, posy) : int * int) (m : model) : bool =
-  posx < 0 || posx > cBOARD_X - 1 || posy < 0 || (posy < cBOARD_Y && m.(posy).(posx))
+  posx < 0 || posx > cBOARD_X - 1 || posy < 0 || (posy < cBOARD_Y && m.(posy).(posx)) ;;
 
 let clear_lines (m : model) : int =
   let shift = ref 0 in
