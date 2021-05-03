@@ -30,24 +30,23 @@ let _ =
   (* comment *)
   let m = Array.make_matrix cBOARD_Y cBOARD_X false in
   let score = ref 0 in
+  let level = ref 1 in
 
   while true do
     let piece = new tetrimino (random_piece ()) in
     while piece#move m Down do
-      V.render_model m !score;
+      V.render_model m !score !level;
       V.render_piece piece;
       let now = Sys.time () in
-      while Sys.time () -. now < cTICK_SPEED do
+      while Sys.time () -. now < level_tick_formula !level do
         if piece#move m (on_capture ()) then (
-          V.render_model m !score;
+          V.render_model m !score !level;
           V.render_piece piece
         );
       done;
     done;
-    if List.exists (fun (_, y) -> y > cBOARD_Y) piece#get_pos then
-      failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
-    else
-      piece#add_to_model m;
-      score := !score + (clear_lines m);
-      (* G.sound 800 200; Graphics sound function not compatible with system *)
+    piece#add_to_model m;
+    score := !score + (clear_lines m);
+    level := !score / 5 + 1;
+    (* G.sound 800 200; Graphics sound function not compatible with system *)
   done;

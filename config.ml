@@ -23,7 +23,8 @@ type piece =
   | T
   | Z ;;
 
-let cTICK_SPEED = 200. /. 1000. ;;
+let tick_speed = ref 0.4 ;;
+let level_tick_formula level = !tick_speed /. (float_of_int level) *. 1.3 ;;
 let cBOARD_X = 10 ;;
 let cBOARD_Y = 20 ;;
 let cBLOCK_SIZE = 35 ;;
