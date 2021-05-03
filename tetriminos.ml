@@ -44,28 +44,15 @@ class tetrimino (p : piece)=
     initializer
       square_list <- center ::
       (let (cx, cy) = center#get_pos in      (* Chose to sacrifice brevity in order to remove hardcoding *)
-        match p with
-       | I -> [new square (cx - 1) cy;
-               new square (cx + 1) cy;
-               new square (cx + 2) cy]
-       | J -> [new square (cx - 1) (cy + 1);
-               new square (cx - 1) cy;
-               new square (cx + 1) cy]
-       | L -> [new square (cx - 1) cy;
-               new square (cx + 1) cy;
-               new square (cx + 1) (cy + 1)]
-       | O -> [new square cx (cy + 1);
-               new square (cx + 1) cy;
-               new square (cx + 1) (cy + 1)]
-       | S -> [new square (cx - 1) cy;
-               new square cx (cy + 1);
-               new square (cx + 1) (cy + 1)]
-       | T -> [new square (cx - 1) cy;
-               new square cx (cy + 1);
-               new square (cx + 1) cy]
-       | Z -> [new square (cx - 1) (cy + 1);
-               new square cx (cy + 1);
-               new square (cx + 1) cy])
+        match p with  (* lines are a bit long, but what they do is clear
+                         and this format is preferable to writing 14 more lines *)
+       | I -> [new square (cx - 1) cy; new square (cx + 1) cy; new square (cx + 2) cy]
+       | J -> [new square (cx + 1) cy; new square (cx - 1) cy; new square (cx - 1) (cy + 1)]
+       | L -> [new square (cx - 1) cy; new square (cx + 1) cy; new square (cx + 1) (cy + 1)]
+       | O -> [new square cx (cy + 1); new square (cx + 1) cy; new square (cx + 1) (cy + 1)]
+       | S -> [new square (cx - 1) cy; new square cx (cy + 1); new square (cx + 1) (cy + 1)]
+       | T -> [new square (cx - 1) cy; new square cx (cy + 1); new square (cx + 1) cy]
+       | Z -> [new square (cx + 1) cy; new square cx (cy + 1); new square (cx - 1) (cy + 1)])
 
     method get_pos : (int * int) list =
       List.map (fun sq -> sq#get_pos) square_list

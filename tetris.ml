@@ -38,8 +38,9 @@ let _ =
       V.render_model m;
       V.render_piece piece;
       V.render_text !score !level;
+      let tickspeed = level_tick_formula !level in (* slight optimization *)
       let now = Sys.time () in
-      while Sys.time () -. now < level_tick_formula !level do
+      while Sys.time () -. now < tickspeed do
         if piece#move m (on_capture ()) then (
           V.render_model m;
           V.render_piece piece;
