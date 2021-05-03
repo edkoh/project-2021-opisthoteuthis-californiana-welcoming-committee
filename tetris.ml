@@ -35,13 +35,15 @@ let _ =
   while true do
     let piece = new tetrimino (random_piece ()) in
     while piece#move m Down do
-      V.render_model m !score !level;
+      V.render_model m;
       V.render_piece piece;
+      V.render_text !score !level;
       let now = Sys.time () in
       while Sys.time () -. now < level_tick_formula !level do
         if piece#move m (on_capture ()) then (
-          V.render_model m !score !level;
-          V.render_piece piece
+          V.render_model m;
+          V.render_piece piece;
+          V.render_text !score !level;
         );
       done;
     done;
