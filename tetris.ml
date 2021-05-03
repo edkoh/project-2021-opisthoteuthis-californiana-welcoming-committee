@@ -40,12 +40,15 @@ let _ =
       V.render_text !score !level;
       let tickspeed = level_tick_formula !level in (* slight optimization *)
       let now = Sys.time () in
-      while Sys.time () -. now < tickspeed do
-        if piece#move m (on_capture ()) then (
+      let dropped = ref false in
+      while (Sys.time () -. now < tickspeed) && not !dropped do
+        let input = on_capture () in
+        if piece#move m input then (
           V.render_model m;
           V.render_piece piece;
           V.render_text !score !level;
         );
+        if input = Drop then dropped := true
       done;
     done;
     if List.exists (fun (_, y) -> y >= cBOARD_Y) piece#get_pos then
