@@ -55,10 +55,10 @@ let render_model (m : model) =
 let render_text (score : int) (level : int) : unit =
   G.moveto 0 ((cBOARD_Y + 2) * cBLOCK_SIZE - 10);
   G.draw_string " CONTROLS:   Move: WASD   |   Rotate:   ccw | cw:  <  |  >"; (* Controls display *)
-  G.moveto (cBOARD_X) ((cBOARD_Y + 1) * cBLOCK_SIZE);
-  G.draw_string ("SCORE: " ^ string_of_int score); (* Score display *)
-  G.moveto (cBOARD_X) ((cBOARD_Y + 1) * cBLOCK_SIZE - 20);
-  G.draw_string ("LEVEL: " ^ string_of_int level); (* level display *) ;;
+  G.moveto 0 ((cBOARD_Y + 1) * cBLOCK_SIZE);
+  G.draw_string (" SCORE: " ^ string_of_int score); (* Score display *)
+  G.moveto 0 ((cBOARD_Y + 1) * cBLOCK_SIZE - 20);
+  G.draw_string (" LEVEL: " ^ string_of_int level); (* level display *) ;;
 
 (* perhaps put in tetriminos? *)
 let render_piece (t : tetrimino) : unit =
