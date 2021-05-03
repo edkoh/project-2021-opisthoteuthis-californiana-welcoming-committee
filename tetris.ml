@@ -48,7 +48,7 @@ let _ =
         );
       done;
     done;
-    if List.exists (fun (_, y) -> y > cBOARD_Y) piece#get_pos then
+    if List.exists (fun (_, y) -> y >= cBOARD_Y) piece#get_pos then
       failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
     else
       piece#add_to_model m;
