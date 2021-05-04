@@ -4,12 +4,9 @@ In this writeup, we will explain the functionality in each of the files, and the
 
 Our Tetris implementation is split into six different files: Tetris, Model, Visualization, Tetrominoes, Controller, and Config. Tetris includes the main game loops; Model defines the `model` type and includes useful functions that operate on models; Visualization has functions to visualize the game; Tetrominoes defines both the square class and tetromino class; Controller defines a function that translates keystrokes into actions; and last but not least, Config stores config values that the rest of the game draws from.
 
-
-
-
-
-
-
+<div style="text-align:center">
+   <img src="./Visualization" width="400px">
+</div>
 
 ---
 
