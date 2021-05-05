@@ -3,7 +3,7 @@
                             OCaml Tetris
 
                                Model
-                  File containing functionality for models
+                File containing functionality for models
  *)
 
 open Config ;;
@@ -16,7 +16,7 @@ type model = int array array ;;
 let sq_full ((posx, posy) : int * int) (m : model) : bool =
   posx < 0 || posx > cBOARD_X - 1 || posy < 0 || (posy < cBOARD_Y && (m.(posy).(posx)) <> 0) ;;
 
-(* clear_lines m -- Destructively clears all the lines in a model and returns 
+(* clear_lines m -- Destructively clears all the lines in a model and returns
                     number of lines cleared. *)
 let clear_lines (m : model) : int =
   let shift = ref 0 in

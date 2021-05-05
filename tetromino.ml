@@ -93,3 +93,8 @@ class tetromino (others : (int * int) list) (color : int) =
     method draw =
       List.iter (fun pos -> V.fill_square pos color) this#get_pos
   end
+
+class ipiece =
+  object
+    inherit tetromino [(-1,0);(1,0);(2,0)] iColor
+  end

@@ -33,6 +33,8 @@ let random_piece : unit -> tetromino =
     | 6 -> Z
     | _ -> failwith "No such piece matches random generator output" ;; *)
 
+exception Gameover ;;
+
 let _ =
   V.init_graph ();
   (* comment *)
@@ -62,7 +64,7 @@ let _ =
       done;
     done;
     if List.exists (fun (_, y) -> y >= cBOARD_Y) piece#get_pos then
-      failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
+      raise Gameover ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
       (* implement game over screen if there was more time*)
     else
       piece#add_to_model m;

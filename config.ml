@@ -23,7 +23,7 @@ type action =
   | T
   | Z ;; *)
 
-(* tetrimino colors *)
+(* tetromino colors *)
 let iColor = 0x66ffff ;;
 let jColor = 0x3366ff ;;
 let lColor = 0xff9933 ;;
