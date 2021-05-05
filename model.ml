@@ -9,7 +9,6 @@
 open Config ;;
 
 (* new model file *)
-(* type model = bool array array ;; *)
 type model = int array array ;;
 
 (* sq_full pos m -- Returns true if the square in the model is filled or out of bounds. *)

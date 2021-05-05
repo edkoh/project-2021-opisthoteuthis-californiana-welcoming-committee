@@ -23,15 +23,6 @@ let random_piece : unit -> tetromino =
     | 5 -> new tetromino tOther tColor
     | 6 -> new tetromino zOther zColor
     | _ -> failwith "No such piece matches random generator output" ;;
-    (*
-    | 0 -> I
-    | 1 -> J
-    | 2 -> L
-    | 3 -> O
-    | 4 -> S
-    | 5 -> T
-    | 6 -> Z
-    | _ -> failwith "No such piece matches random generator output" ;; *)
 
 exception Gameover ;;
 
@@ -46,9 +37,8 @@ let _ =
     let piece = random_piece () in
     while piece#move m Down do
       V.render_model m;
-      (*V.render_piece piece;*)
-      piece#draw;
       V.render_text !score !level;
+      piece#draw;
       let tickspeed = level_tick_formula !level in (* slight optimization *)
       let now = Sys.time () in
       let dropped = ref false in
@@ -56,9 +46,8 @@ let _ =
         let input = on_capture () in
         if piece#move m input then (
           V.render_model m;
-          (*V.render_piece piece;*)
-          piece#draw;
           V.render_text !score !level;
+          piece#draw;
         );
         if input = Drop then dropped := true
       done;

@@ -1,10 +1,10 @@
-all: config tetriminos tetris vis tests controller
+all: config tetromino tetris vis tests controller
 
 config: config.ml
 	ocamlbuild -use-ocamlfind config.byte
 
-tetriminos: tetriminos.ml
-	ocamlbuild -use-ocamlfind tetriminos.byte
+tetromino: tetromino.ml
+	ocamlbuild -use-ocamlfind tetromino.byte
 
 tetris: tetris.ml
 	ocamlbuild -use-ocamlfind tetris.byte
