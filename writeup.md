@@ -1,8 +1,8 @@
 # __OCaml Tetris Writeup__
 
-In this writeup, we will explain the functionality in each of the files, and then bring it all together and walk through the operation of the game!
+In this writeup, we will explain the functionality in each of the files, and then bring it all together and walk through the operation of the game.
 
-Our Tetris implementation is split into six different files: Tetris, Model, Visualization, Tetrominoes, Controller, and Config. Tetris includes the main game loops; Model defines the `model` type and includes useful functions that operate on models; Visualization has functions to visualize the game; Tetrominoes defines both the square class and tetromino class; Controller defines a function that translates keystrokes into actions; and last but not least, Config stores config values that the rest of the game draws from.
+Our Tetris implementation is split into six different files: Tetris, Model, Visualization, Tetrominoes, Controller, and Config. Tetris includes the main game loops; Model defines the `model` type and useful functions that operate on the model; Visualization encompasses the functions used to visualize the game; Tetrominoes defines both the tetromino class and the square class of which tetriminos are composed of; Controller defines the functionality used for users to interact with the game; and finally Config stores initial configuration values and type definitions that the rest of the game draws from.
 
 <div style="text-align:center">
    <img src="./Visualization.png" width="400px">
