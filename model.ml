@@ -15,6 +15,8 @@ type model = bool array array ;;
 let sq_full ((posx, posy) : int * int) (m : model) : bool =
   posx < 0 || posx > cBOARD_X - 1 || posy < 0 || (posy < cBOARD_Y && m.(posy).(posx)) ;;
 
+(* clear_lines m -- Destructively clears all the lines in a model and returns 
+                    number of lines cleared. *)
 let clear_lines (m : model) : int =
   let shift = ref 0 in
   for row = 0 to cBOARD_Y - 1 do
@@ -24,5 +26,4 @@ let clear_lines (m : model) : int =
   for row = (cBOARD_Y - !shift) to cBOARD_Y - 1 do
     m.(row) <- Array.make cBOARD_X false;
   done;
-  !shift
-;;
+  !shift ;;
