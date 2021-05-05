@@ -59,7 +59,7 @@ let _ =
       done;
     done;
     if List.exists (fun (_, y) -> y >= cBOARD_Y) piece#get_pos then
-      raise (GameOver ("GAME OVER. FINAL SCORE: " ^ string_of_int !score))
+      raise (GameOver ("GAME OVER. FINAL SCORE: " ^ string_of_int !score ^ "\n"))
       (* implement game over screen if there was more time*)
     else
       piece#add_to_model m;
