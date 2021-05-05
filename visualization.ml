@@ -40,15 +40,13 @@ let init_graph () =
                                                        of screeny so as to slightly reduce computation*)
   draw_grid_lines () ;;
 
-(* fill_square (x, y) c -- Fills the given square with the color.
-                           Our game only uses blue, but in the future each
-                           piece could have its own color. *)
+(* fill_square (x, y) c -- Fills the given square with the color. *)
 let fill_square ((x, y) : int * int) (c : G.color) : unit =
   G.set_color c;
   G.fill_rect (x * cBLOCK_SIZE) (y * cBLOCK_SIZE) cBLOCK_SIZE cBLOCK_SIZE ;;
 
 (* render_model m -- Renders a model with two for loops.
-                     If a square is true in the model then it gets filled.
+                     If a square is non-zero in the model then it gets filled.
                      Our model takes the form row/column (y, x), but the fill_square
                      function takes column/row (x, y), so that's why the i and j switch.
                      Would write the differently if we were reimplementing. *)
@@ -70,22 +68,3 @@ let render_text (score : int) (level : int) : unit =
   G.draw_string (" SCORE: " ^ string_of_int score); (* Score display *)
   G.moveto 0 ((cBOARD_Y + 1) * cBLOCK_SIZE - 20);
   G.draw_string (" LEVEL: " ^ string_of_int level); (* level display *) ;;
-
-
-
-(* render_piece t -- Given a tetromino, it gets the position of each square
-                     in a list and then fills each. *)
-(* let render_piece (t : tetromino) : unit =
-  let color =
-  (match t.get_type with
-    | I -> G.cyan
-    | J -> G.blue
-    | L -> G.white
-    | O -> G.yellow
-    | S -> G.green
-    | T -> G.magenta
-    | Z -> G.red
-  )
-
-  List.iter (fun pos -> fill_square pos color) t#get_pos ;;
-*)

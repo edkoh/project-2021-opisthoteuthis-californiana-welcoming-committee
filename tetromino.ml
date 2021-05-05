@@ -9,6 +9,7 @@ open Config ;;
 open Model ;;
 module V = Visualization ;;
 
+(* new square initx inity -- Creates a square at the given initial position. *)
 class square (initx : int) (inity : int) =
   object
     val mutable posx : int = initx
@@ -35,11 +36,14 @@ class square (initx : int) (inity : int) =
       | Drop -> failwith "Squares shouldn't drop"
 
     (* add_to_model m -- Adds the square to the model by setting the
-                         corresponding boolean in the model to true *)
+                         corresponding int in the model to that color *)
     method add_to_model (m : model) (c : int) : unit =
       m.(posy).(posx) <- c
   end
 
+(* new tetromino others color -- Creates the tetromino defined by the squares in 
+                                 `others`. These are the squares "other" than
+                                 the center square. *)
 class tetromino (others : (int * int) list) (color : int) =
   object (this)
     val center = new square ((cBOARD_X - 1)/2) (cBOARD_Y + 1)
@@ -48,31 +52,14 @@ class tetromino (others : (int * int) list) (color : int) =
     initializer
       let (cx, cy) = center#get_pos in
       square_list <- center ::
-
         List.map (fun (dx, dy) -> new square (cx + dx) (cy + dy)) others
 
-      (*
-      (let (cx, cy) = center#get_pos in
-
-        match p with  (* lines are a bit long, but what they do is clear
-                         and this format is preferable to writing 14 more lines *)
-       | I -> [new square (cx - 1) cy; new square (cx + 1) cy; new square (cx + 2) cy]
-       | J -> [new square (cx + 1) cy; new square (cx - 1) cy; new square (cx - 1) (cy + 1)]
-       | L -> [new square (cx - 1) cy; new square (cx + 1) cy; new square (cx + 1) (cy + 1)]
-       | O -> [new square cx (cy + 1); new square (cx + 1) cy; new square (cx + 1) (cy + 1)]
-       | S -> [new square (cx - 1) cy; new square cx (cy + 1); new square (cx + 1) (cy + 1)]
-       | T -> [new square (cx - 1) cy; new square cx (cy + 1); new square (cx + 1) cy]
-       | Z -> [new square (cx + 1) cy; new square cx (cy + 1); new square (cx - 1) (cy + 1)]) *)
-
-    (* method get_type : piece =
-      p *)
-
-    (* get_pos () -- Returns a list of all the squares in the piece *)
+    (* get_pos () -- Returns a list of all the squares' positions in the piece *)
     method get_pos : (int * int) list =
       List.map (fun sq -> sq#get_pos) square_list
 
     (* move m a -- Attempts to move the piece returning true on success, false on
-                   failure or NoAction. First gets the position of all the moved squares.
+                   failure or NoAction. First gets the position of all the moved squares (shifted).
                    Then checks those squares against the model, if all is clear, it sets the
                    position of the squares to the moved ones. *)
     method move (m : model) (a : action) : bool =
@@ -89,7 +76,7 @@ class tetromino (others : (int * int) list) (color : int) =
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model m color) square_list
 
-    (* draw -- it gets the position of each square in a list and then fills each. *)
+    (* draw -- Gets the position of each square in a list and then fills each. *)
     method draw =
       List.iter (fun pos -> V.fill_square pos color) this#get_pos
   end
