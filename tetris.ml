@@ -9,7 +9,6 @@ open Config ;;
 open Model ;;
 open Controller ;;
 open Tetriminos ;;
-(* module G = Graphics ;; for sound *)
 module V = Visualization ;;
 
 let random_piece : unit -> tetrimino =
@@ -63,7 +62,8 @@ let _ =
       done;
     done;
     if List.exists (fun (_, y) -> y >= cBOARD_Y) piece#get_pos then
-      failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
+      failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score) 
+      (* implement game over screen if there was more time*)
     else
       piece#add_to_model m;
       score := !score + (clear_lines m);
