@@ -11,6 +11,9 @@ module G = Graphics ;;
 
 let screenx = cBOARD_X * cBLOCK_SIZE ;;
 let screeny = cBOARD_Y * cBLOCK_SIZE ;;
+(* dimensions of "menus" *)
+let menux = 5 * cBLOCK_SIZE ;;
+let menuy = 3 * cBLOCK_SIZE ;;
 
 (* draw_grid_lines () -- Draws all the necessary grid lines. *)
 let draw_grid_lines () =
@@ -23,6 +26,12 @@ let draw_grid_lines () =
     G.lineto moved_x screeny;
   done;
 
+  (* divider for queue *)
+  G.moveto (screenx + cBLOCK_SIZE/3) 0;
+  G.lineto (screenx + cBLOCK_SIZE/3) (screeny + menuy);
+  G.moveto (screenx + cBLOCK_SIZE * 2/3) 0;
+  G.lineto (screenx + cBLOCK_SIZE * 2/3) (screeny + menuy);
+
   (* draw horizontal lines *)
   G.moveto 0 0;
   while (G.current_y () < screeny) do
@@ -33,10 +42,9 @@ let draw_grid_lines () =
 
 (* init_graph () -- Gets all the visuals set up for the game. *)
 let init_graph () =
-  G.open_graph (" " ^ string_of_int screenx ^ "x" ^ string_of_int (screeny + 4 * cBOARD_Y));
+  G.open_graph (" " ^ string_of_int (screenx + menux) ^ "x" ^ string_of_int (screeny + menuy));
   G.set_window_title "OCaml Tetris!";
-  G.draw_rect 0 0 screenx (screeny + 4 * cBOARD_Y); (* extra computation here instead of in definition
-                                                       of screeny so as to slightly reduce computation*)
+  G.draw_rect 0 0 (screenx + menux) (screeny + menuy);
   draw_grid_lines () ;;
 
 (* fill_square (x, y) c -- Fills the given square with the color. *)
@@ -61,9 +69,9 @@ let render_model (m : model) =
 (* render_text score level -- Draws the text for controls, score, and level. *)
 let render_text (score : int) (level : int) : unit =
   G.set_color G.black;
-  G.moveto 0 ((cBOARD_Y + 2) * cBLOCK_SIZE - 10);
+  G.moveto 0 (screeny + menuy - 20);
   G.draw_string " CONTROLS:   Move: WASD   |   Rotate:   ccw | cw:  <  |  >"; (* Controls display *)
-  G.moveto 0 ((cBOARD_Y + 1) * cBLOCK_SIZE);
+  G.moveto 0 (screeny + menuy - 40);
   G.draw_string (" SCORE: " ^ string_of_int score); (* Score display *)
-  G.moveto 0 ((cBOARD_Y + 1) * cBLOCK_SIZE - 20);
+  G.moveto 0 (screeny + menuy - 60);
   G.draw_string (" LEVEL: " ^ string_of_int level); (* level display *) ;;

@@ -35,12 +35,15 @@ let _ =
   let level = ref 1 in
 
   try
+  let queued = ref (random_piece ()) in
   while true do
-    let piece = random_piece () in
+    let piece = !queued in
+    queued := random_piece ();
     while piece#move m Down do
       V.render_model m;
       V.render_text !score !level;
       piece#draw;
+      !queued#draw_queue;
       let tickspeed = level_tick_formula !level in (* slight optimization *)
       let now = Sys.time () in
       let dropped = ref false in
@@ -50,6 +53,7 @@ let _ =
           V.render_model m;
           V.render_text !score !level;
           piece#draw;
+          !queued#draw_queue;
         );
         if input = Drop then dropped := true
       done;

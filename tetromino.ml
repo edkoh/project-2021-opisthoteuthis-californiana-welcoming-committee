@@ -79,6 +79,11 @@ class tetromino (others : (int * int) list) (color : int) =
     (* draw -- Gets the position of each square in a list and then fills each. *)
     method draw =
       List.iter (fun pos -> V.fill_square pos color) this#get_pos
+
+    method draw_queue =
+      let quepos = List.map (fun (dx, dy) -> (cBOARD_X + dx + 2, cBOARD_Y + dy))
+                            ((0, 0) :: others) in
+      List.iter (fun pos -> V.fill_square pos color) quepos
   end
 
 class ipiece =
