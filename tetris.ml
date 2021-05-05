@@ -15,16 +15,17 @@ let random_piece : unit -> tetromino =
   Random.self_init ();
   fun () ->
     match Random.int 7 with
-    | 0 -> new tetromino iOther iColor
-    | 1 -> new tetromino jOther jColor
-    | 2 -> new tetromino lOther lColor
-    | 3 -> new tetromino oOther oColor
-    | 4 -> new tetromino sOther sColor
-    | 5 -> new tetromino tOther tColor
-    | 6 -> new tetromino zOther zColor
+    | 0 -> new ipiece
+    | 1 -> new jpiece
+    | 2 -> new lpiece
+    | 3 -> new opiece
+    | 4 -> new spiece
+    | 5 -> new tpiece
+    | 6 -> new zpiece
     | _ -> failwith "No such piece matches random generator output" ;;
 
-exception Gameover ;;
+
+exception GameOver of string;;
 
 let _ =
   V.init_graph ();
@@ -33,6 +34,7 @@ let _ =
   let score = ref 0 in
   let level = ref 1 in
 
+  try
   while true do
     let piece = random_piece () in
     while piece#move m Down do
@@ -53,7 +55,7 @@ let _ =
       done;
     done;
     if List.exists (fun (_, y) -> y >= cBOARD_Y) piece#get_pos then
-      raise Gameover ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
+      raise (GameOver ("GAME OVER. FINAL SCORE: " ^ string_of_int !score))
       (* implement game over screen if there was more time*)
     else
       piece#add_to_model m;
@@ -61,3 +63,5 @@ let _ =
       level := !score / 5 + 1;
       (* G.sound 800 200; Graphics sound function not compatible with system *)
   done;
+  with
+    | GameOver s -> Printf.printf "%s" s

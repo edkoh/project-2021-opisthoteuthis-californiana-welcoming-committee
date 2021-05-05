@@ -41,7 +41,7 @@ class square (initx : int) (inity : int) =
       m.(posy).(posx) <- c
   end
 
-(* new tetromino others color -- Creates the tetromino defined by the squares in 
+(* new tetromino others color -- Creates the tetromino defined by the squares in
                                  `others`. These are the squares "other" than
                                  the center square. *)
 class tetromino (others : (int * int) list) (color : int) =
@@ -84,4 +84,34 @@ class tetromino (others : (int * int) list) (color : int) =
 class ipiece =
   object
     inherit tetromino [(-1,0);(1,0);(2,0)] iColor
+  end
+
+class jpiece =
+  object
+    inherit tetromino [(1,0);(-1,0);(-1,1)] jColor
+  end
+
+class lpiece =
+  object
+    inherit tetromino [(-1,0);(1,0);(1,1)] lColor
+  end
+
+class opiece =
+  object
+    inherit tetromino [(0,1);(1,0);(1,1)] oColor
+  end
+
+class spiece =
+  object
+    inherit tetromino [(-1,0);(0,1);(1,1)] sColor
+  end
+
+class tpiece =
+  object
+    inherit tetromino [(-1,0);(0,1);(1,0)] tColor
+  end
+
+class zpiece =
+  object
+    inherit tetromino [(1,0);(0,1);(-1,1)] zColor
   end
