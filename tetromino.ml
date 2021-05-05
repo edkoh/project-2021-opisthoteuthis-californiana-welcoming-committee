@@ -88,6 +88,7 @@ class tetromino (others : (int * int) list) (color : int) =
                          function. *)
     method add_to_model (m : model) : unit =
       List.iter (fun sq -> sq#add_to_model m color) square_list
+
     (* draw -- it gets the position of each square in a list and then fills each. *)
     method draw =
       List.iter (fun pos -> V.fill_square pos color) this#get_pos
