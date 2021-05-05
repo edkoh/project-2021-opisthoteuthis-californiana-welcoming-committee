@@ -7,6 +7,7 @@
 
 open Config ;;
 open Model ;;
+module V = Visualization ;;
 
 class square (initx : int) (inity : int) =
   object
@@ -32,18 +33,21 @@ class square (initx : int) (inity : int) =
       | NoAction -> (0, 0)
       | Drop -> failwith "Squares shouldn't drop"
 
-    method add_to_model (m : model) : unit =
-      m.(posy).(posx) <- true
+    method add_to_model (m : model) (c : int) : unit =
+      m.(posy).(posx) <- c
   end
 
-class tetrimino (p : piece)=
+class tetrimino (others : (int * int) list) (color : int) =
   object (this)
     val center = new square ((cBOARD_X - 1)/2) (cBOARD_Y + 1)
     val mutable square_list = []
 
     initializer
+      let (cx, cy) = center#get_pos in
       square_list <- center ::
-      (let (cx, cy) = center#get_pos in      (* Chose to sacrifice brevity in order to remove hardcoding *)
+        List.map (fun (dx, dy) -> new square (cx + dx) (cy + dy)) others
+
+      (* (let (cx, cy) = center#get_pos in      (* Chose to sacrifice brevity in order to remove hardcoding *)
         match p with  (* lines are a bit long, but what they do is clear
                          and this format is preferable to writing 14 more lines *)
        | I -> [new square (cx - 1) cy; new square (cx + 1) cy; new square (cx + 2) cy]
@@ -52,7 +56,10 @@ class tetrimino (p : piece)=
        | O -> [new square cx (cy + 1); new square (cx + 1) cy; new square (cx + 1) (cy + 1)]
        | S -> [new square (cx - 1) cy; new square cx (cy + 1); new square (cx + 1) (cy + 1)]
        | T -> [new square (cx - 1) cy; new square cx (cy + 1); new square (cx + 1) cy]
-       | Z -> [new square (cx + 1) cy; new square cx (cy + 1); new square (cx - 1) (cy + 1)])
+       | Z -> [new square (cx + 1) cy; new square cx (cy + 1); new square (cx - 1) (cy + 1)]) *)
+
+    (* method get_type : piece =
+      p *)
 
     method get_pos : (int * int) list =
       List.map (fun sq -> sq#get_pos) square_list
@@ -68,5 +75,8 @@ class tetrimino (p : piece)=
           (List.iter2 (fun sq pos -> sq#set_pos pos) square_list shifted; true)
 
     method add_to_model (m : model) : unit =
-      List.iter (fun sq -> sq#add_to_model m) square_list
+      List.iter (fun sq -> sq#add_to_model m color) square_list
+
+    method draw =
+      List.iter (fun pos -> V.fill_square pos color) this#get_pos
   end

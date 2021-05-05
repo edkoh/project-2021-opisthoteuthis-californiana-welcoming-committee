@@ -7,7 +7,7 @@
 
 open Config ;;
 open Model ;;
-open Tetriminos ;;
+(* open Tetriminos ;; *)
 module G = Graphics ;;
 
 let screenx = cBOARD_X * cBLOCK_SIZE ;;
@@ -47,12 +47,13 @@ let render_model (m : model) =
   G.clear_graph ();
   for i = 0 to (Array.length m) - 1 do
     for j = 0 to (Array.length m.(i)) - 1 do
-      if m.(i).(j) then fill_square (j, i) G.blue;
+      if (m.(i).(j) <> 0) then fill_square (j, i) m.(i).(j);
     done;
   done;
   draw_grid_lines () ;;
 
 let render_text (score : int) (level : int) : unit =
+  G.set_color G.black;
   G.moveto 0 ((cBOARD_Y + 2) * cBLOCK_SIZE - 10);
   G.draw_string " CONTROLS:   Move: WASD   |   Rotate:   ccw | cw:  <  |  >"; (* Controls display *)
   G.moveto 0 ((cBOARD_Y + 1) * cBLOCK_SIZE);
@@ -61,5 +62,18 @@ let render_text (score : int) (level : int) : unit =
   G.draw_string (" LEVEL: " ^ string_of_int level); (* level display *) ;;
 
 (* perhaps put in tetriminos? *)
+(*
 let render_piece (t : tetrimino) : unit =
-  List.iter (fun pos -> fill_square pos G.blue) t#get_pos ;;
+  let color =
+  (match t.get_type with
+    | I -> G.cyan
+    | J -> G.blue
+    | L -> G.white
+    | O -> G.yellow
+    | S -> G.green
+    | T -> G.magenta
+    | Z -> G.red
+  )
+
+  List.iter (fun pos -> fill_square pos color) t#get_pos ;;
+*)

@@ -14,14 +14,32 @@ type action =
   | CCW
   | NoAction ;;
 
-type piece =
+(* type piece =
   | I
   | J
   | L
   | O
   | S
   | T
-  | Z ;;
+  | Z ;; *)
+
+(* tetrimino colors *)
+let iColor = 0x66ffff ;;
+let jColor = 0x3366ff ;;
+let lColor = 0xff9933 ;;
+let oColor = 0xffff00 ;;
+let sColor = 0x32CD32 ;;
+let tColor = 0xcc00cc ;;
+let zColor = 0xff0000 ;;
+
+(* relative positions of other squares about center in tetriminos *)
+let iOther = [(-1,0);(1,0);(2,0)] ;;
+let jOther = [(1,0);(-1,0);(-1,1)] ;;
+let lOther = [(-1,0);(1,0);(1,1)] ;;
+let oOther = [(0,1);(1,0);(1,1)] ;;
+let sOther = [(-1,0);(0,1);(1,1)] ;;
+let tOther = [(-1,0);(0,1);(1,0)] ;;
+let zOther = [(1,0);(0,1);(-1,1)] ;;
 
 let initTick_speed = 0.4 ;;
 let level_tick_formula level = initTick_speed /. (float_of_int level) *. 1.3 ;;

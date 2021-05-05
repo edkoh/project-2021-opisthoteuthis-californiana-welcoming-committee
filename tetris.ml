@@ -12,10 +12,19 @@ open Tetriminos ;;
 (* module G = Graphics ;; for sound *)
 module V = Visualization ;;
 
-let random_piece : unit -> piece =
+let random_piece : unit -> tetrimino =
   Random.self_init ();
   fun () ->
     match Random.int 7 with
+    | 0 -> new tetrimino iOther iColor
+    | 1 -> new tetrimino jOther jColor
+    | 2 -> new tetrimino lOther lColor
+    | 3 -> new tetrimino oOther oColor
+    | 4 -> new tetrimino sOther sColor
+    | 5 -> new tetrimino tOther tColor
+    | 6 -> new tetrimino zOther zColor
+    | _ -> failwith "No such piece matches random generator output" ;;
+    (*
     | 0 -> I
     | 1 -> J
     | 2 -> L
@@ -23,20 +32,21 @@ let random_piece : unit -> piece =
     | 4 -> S
     | 5 -> T
     | 6 -> Z
-    | _ -> failwith "No such piece matches random generator output" ;;
+    | _ -> failwith "No such piece matches random generator output" ;; *)
 
 let _ =
   V.init_graph ();
   (* comment *)
-  let m = Array.make_matrix cBOARD_Y cBOARD_X false in
+  let m = Array.make_matrix cBOARD_Y cBOARD_X 0 in
   let score = ref 0 in
   let level = ref 1 in
 
   while true do
-    let piece = new tetrimino (random_piece ()) in
+    let piece = random_piece () in
     while piece#move m Down do
       V.render_model m;
-      V.render_piece piece;
+      (*V.render_piece piece;*)
+      piece#draw;
       V.render_text !score !level;
       let tickspeed = level_tick_formula !level in (* slight optimization *)
       let now = Sys.time () in
@@ -45,7 +55,8 @@ let _ =
         let input = on_capture () in
         if piece#move m input then (
           V.render_model m;
-          V.render_piece piece;
+          (*V.render_piece piece;*)
+          piece#draw;
           V.render_text !score !level;
         );
         if input = Drop then dropped := true
