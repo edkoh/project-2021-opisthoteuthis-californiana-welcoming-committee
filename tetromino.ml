@@ -2,7 +2,7 @@
                          CS 51 Final Project
                             OCaml Tetris
 
-                             Tetriminos
+                             Tetrominoes
  *)
 
 open Config ;;
@@ -40,7 +40,7 @@ class square (initx : int) (inity : int) =
       m.(posy).(posx) <- c
   end
 
-class tetrimino (others : (int * int) list) (color : int) =
+class tetromino (others : (int * int) list) (color : int) =
   object (this)
     val center = new square ((cBOARD_X - 1)/2) (cBOARD_Y + 1)
     val mutable square_list = []

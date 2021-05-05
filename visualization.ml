@@ -7,7 +7,7 @@
 
 open Config ;;
 open Model ;;
-(* open Tetriminos ;; *)
+(* open Tetromino ;; *)
 module G = Graphics ;;
 
 let screenx = cBOARD_X * cBLOCK_SIZE ;;
@@ -73,9 +73,9 @@ let render_text (score : int) (level : int) : unit =
 
 
 
-(* render_piece t -- Given a tetrimino, it gets the position of each square
+(* render_piece t -- Given a tetromino, it gets the position of each square
                      in a list and then fills each. *)
-(* let render_piece (t : tetrimino) : unit =
+(* let render_piece (t : tetromino) : unit =
   let color =
   (match t.get_type with
     | I -> G.cyan

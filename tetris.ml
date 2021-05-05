@@ -8,20 +8,20 @@
 open Config ;;
 open Model ;;
 open Controller ;;
-open Tetriminos ;;
+open Tetromino ;;
 module V = Visualization ;;
 
-let random_piece : unit -> tetrimino =
+let random_piece : unit -> tetromino =
   Random.self_init ();
   fun () ->
     match Random.int 7 with
-    | 0 -> new tetrimino iOther iColor
-    | 1 -> new tetrimino jOther jColor
-    | 2 -> new tetrimino lOther lColor
-    | 3 -> new tetrimino oOther oColor
-    | 4 -> new tetrimino sOther sColor
-    | 5 -> new tetrimino tOther tColor
-    | 6 -> new tetrimino zOther zColor
+    | 0 -> new tetromino iOther iColor
+    | 1 -> new tetromino jOther jColor
+    | 2 -> new tetromino lOther lColor
+    | 3 -> new tetromino oOther oColor
+    | 4 -> new tetromino sOther sColor
+    | 5 -> new tetromino tOther tColor
+    | 6 -> new tetromino zOther zColor
     | _ -> failwith "No such piece matches random generator output" ;;
     (*
     | 0 -> I
@@ -62,7 +62,7 @@ let _ =
       done;
     done;
     if List.exists (fun (_, y) -> y >= cBOARD_Y) piece#get_pos then
-      failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score) 
+      failwith ("GAME OVER. FINAL SCORE: " ^ string_of_int !score)
       (* implement game over screen if there was more time*)
     else
       piece#add_to_model m;
