@@ -7,7 +7,6 @@
 
 open Config ;;
 open Model ;;
-(* open Tetromino ;; *)
 module G = Graphics ;;
 
 let screenx = cBOARD_X * cBLOCK_SIZE ;;

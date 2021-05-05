@@ -14,15 +14,6 @@ type action =
   | CCW
   | NoAction ;;
 
-(* type piece =
-  | I
-  | J
-  | L
-  | O
-  | S
-  | T
-  | Z ;; *)
-
 (* tetromino colors *)
 let iColor = 0x66ffff ;;
 let jColor = 0x3366ff ;;
