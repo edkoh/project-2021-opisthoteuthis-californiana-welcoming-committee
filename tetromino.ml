@@ -59,9 +59,9 @@ class tetromino (others : (int * int) list) (color : int) =
       List.map (fun sq -> sq#get_pos) square_list
 
     (* move m a -- Attempts to move the piece returning true on success, false on
-                   failure or NoAction. First gets the position of all the moved squares (shifted).
-                   Then checks those squares against the model, if all is clear, it sets the
-                   position of the squares to the moved ones. *)
+                   failure or NoAction. First gets the hypothetical position of all
+                   shifted squares then checks those positions for interference with
+                   the model. If not, the squares are shifted. *)
     method move (m : model) (a : action) : bool =
       if a = NoAction then false
       else if a = Drop then (this#move m Down) && (this#move m Drop)
