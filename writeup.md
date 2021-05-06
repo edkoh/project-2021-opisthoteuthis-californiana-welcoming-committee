@@ -13,7 +13,9 @@ This overall structure of our project is visualized below
 
 ---
 
-# Model (model.ml)
+# Model
+
+## model.ml
 
 One of the most important concepts in our implementation is the model, which represents the playfield or “matrix”. At any given time, our model stores the state of the board in a two dimensional matrix of integers using the default OCaml `Array` type. This form was decided upon in order to most directly represent the different colors of displayed squares. Thus, the elements of the array are initially set to 0, the value representing an empty square, and as the game progresses, these 0’s are replaced by hex values of the color corresponding to the tetromino placed.
 
@@ -21,7 +23,7 @@ Critically, the model does not store the current active tetromino under the play
 
 Another design decision in the implementation of the model was to define a model as an array of “rows”. The model was defined in such a way in order to facilitate the clearing of lines, which folds over each row.
 
-#### Additional functions
+### Additional functions
 
 The `sq_full` function defined in `model.ml` simply takes in an `x`, `y` position and a model and returns whether the position is “occupied” in the model or is out of bounds. The only exception is if the piece is within the `x` boundaries but above the upper `y` boundary of the model. This was done in order to allow the piece to spawn on the 20th and 21st rows as per the standard tetris model - as well as a possible future implementation of a “vanish/buffer zone” (described here: https://harddrop.com/wiki/Playfield).
 
@@ -49,7 +51,7 @@ From there, the seven distinct tetrominoes are simply defined as subclasses of t
 
 This is where all the gritty work happens drawing the board. Mostly self-explanatory, the functions here all basically do as they’re named. We initialized our graph to contain a grid of the playfield and a surrounding rectangle, as well as “displays” above and to the right. The above display is used to view the controls, level (speed of gravity), and score (how many lines cleared). The display to the right houses the queued pieces, which at the present moment there is only one of since the generally slow movement speed makes having any more uninteresting for the game. The `render_model` and `render_text` functions were separated in order to more clearly encompass what each does.
 
-# Controller (controller.ml) 
+# Controller (controller.ml)
 
 While the current implementation of the controller appears simple, a great deal of thought and time had actually gone into it. Due to the way the `Graphics` module implements `read_key`, there exists a delay between reading keypresses and thus the speed with which inputs can be taken is capped. The only possible solution we were able to come up with was using the `wait_next_event` function and including the `Poll` event which skips the wait and “returns immediately”. However, again as a result of the `Graphics` implementation, doing so resulted in the keypresses being rapidly queued in a queue inaccessible to us. This had the effect that only the first keypress was read and constantly repeated for an extremely extended duration. As a result of this, we have used the current implementation and thus the current game has a somewhat limited movement speed.
 
@@ -59,11 +61,11 @@ In our implementation of the game, we decided to run everything in a statically 
 
 When receiving keyboard input, we use a polling technique using the `on_capture ()` function. A while loop runs the `on_capture ()` function constantly in between ticks. Because of the ticking nature of the game, if we used a blocking technique, we would still need to run a timer of some sort in the background in order to reset the blocking call. Thus, we found that the polling technique works well for our purposes.
 
-# Config (config.ml)
+## Config (config.ml)
 
 Beyond the basic configuration values for the model and gameplay, we additionally included in our `configuration` file values for the different colors used. While this could be hardcoded into the tetromino definitions, we felt putting values in config.ml would make the code more readable and additionally make it easier to reconfigure the colors should the need arise. (Ya seriously edward why did you pick such a bright yellow)
 
-# Tetris Gameplay
+## Tetris Gameplay
 
 Enjoy! We had a lot of fun procrastinating other finals by “playtesting.” Move with WASD and rotate with “<” and “>”. The game speeds up pretty quickly. Our highscores are 36 and 56 (Felix and Edward respectively).
 
