@@ -19,4 +19,4 @@ controller: controller.ml
 	ocamlbuild -use-ocamlfind controller.byte
 	
 run:
-	make all && ./tests.byte
+	make all && ./tetris.byte
